@@ -34,16 +34,14 @@ def clock_input():
             print("What have you done?\nUse only integers numbers!\nGrandma has been eaten by a wolf!!\n")
 
 
-# clock_in = 12, 25, 37
-"""
-clock_in = clock_input()
-clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
-clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
-while True:
-    print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
-    clock_sec += 1
-    time.sleep(1)
-"""
+def seconds_time(clock):
+    """
+    Convert a tuple of hours, minutes and seconds only in seconds.
+    :return: Time in seconds.
+    """
+    clock_sec = clock[0] * 3600 + clock[1] * 60 + clock[2]
+    clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
+    return clock_sec
 
 
 def binary_choice():
@@ -84,9 +82,7 @@ def user_time():
     Display the time chosen by the user updated every second.
     :return: ∅
     """
-    clock_in = clock_input()
-    my_clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
-    my_clock_sec = my_clock_sec - 3600  # Correct time because it begins at 1:00 AM
+    my_clock_sec = seconds_time(clock_input())
     display_time(my_clock_sec)
 
 
