@@ -61,14 +61,11 @@ def binary_choice():
             print("Use only integers numbers")
 
 
-def display_time(clock_sec=0):
+def display_time(clock_sec=None):
     """
     Display the choose time updated every second.
     :return: ∅
     """
-    if clock_sec == 0:
-        clock_sec = None
-
     while True:
         print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
         if clock_sec is not None:
