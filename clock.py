@@ -21,7 +21,7 @@ def local_time():
 ###############################################################
 
 
-def display_time2():
+def set_time():
     input_time = input("What time is it? Use the format 'hours:minutes:seconds': ").split(":")
     tuple_time = tuple(input_time)
     time_sec = (int(tuple_time[0])*3600 + int(tuple_time[1])*60 + int(tuple_time[2])) - 3600
@@ -64,7 +64,7 @@ def clock():
         local_time()
 
     elif clock_choice == 2:
-        display_time2()
+        set_time()
     
     else:
         print("input error")
@@ -77,9 +77,6 @@ def clock():
     # thread_time = threading.Thread(target=display_time)
     # thread_time.daemon = True
     # thread_time.start()
-
-
-
 
 if __name__ == "__main__":
     clock()
