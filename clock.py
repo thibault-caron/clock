@@ -18,12 +18,11 @@ def clock_input():
     test = False
     while not test:
         try:
-            clock = (int(input("Set the clock!\n\nFirst, chose hours : ", )), int(input("Next, chose minutes : ", )),
-                     int(input("And at the end, chose seconds : ", )))
+            clock = (int(input("Set the clock!\n\nFirst, choose hours : ", )), int(input("Next, choose minutes : ", )),
+                     int(input("And at the end, choose seconds : ", )))
             if 0 <= clock[0] < 24:
                 if 0 <= clock[1] < 60:
                     if 0 <= clock[2] < 60:
-                        test = True
                         return clock
                     else:
                         print("Seconds has to be in a correct range!")
@@ -36,6 +35,7 @@ def clock_input():
 
 
 # clock_in = 12, 25, 37
+"""
 clock_in = clock_input()
 clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
 clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
@@ -43,3 +43,25 @@ while True:
     print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
     clock_sec += 1
     time.sleep(1)
+"""
+
+
+def binary_choice():
+    """
+    Translate a choice in integers 1 or 2.
+    :return: Integer 1 or 2.
+    """
+    test = False
+    while not test:
+        try:
+            binary = int(input("Your choice: ", ))
+            if binary == 1 or binary == 2:
+                return binary
+            else:
+                print("You can only choose 1 or 2")
+        except ValueError:
+            print("Use only integers numbers")
+
+
+print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
+my_choice = binary_choice()
