@@ -63,5 +63,42 @@ def binary_choice():
             print("Use only integers numbers")
 
 
-print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
-my_choice = binary_choice()
+def current_time():
+    """
+    Display the current time updated every second.
+    :return: ∅
+    """
+    while True:
+        print("\r", time.strftime("%H:%M:%S", time.localtime()), end="")
+        time.sleep(1)
+
+
+def user_time():
+    """
+    Display the time chosen by the user updated every second.
+    :return: ∅
+    """
+    clock_in = clock_input()
+    clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
+    clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
+    while True:
+        print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
+        clock_sec += 1
+        time.sleep(1)
+
+
+def clock():
+    """
+    Clock main function.
+    :return: ∅
+    """
+    print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
+    my_choice = binary_choice()
+    if my_choice == 1:
+        user_time()
+    elif my_choice == 2:
+        current_time()
+
+
+if __name__ == "__main__":
+    clock()
