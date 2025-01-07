@@ -63,13 +63,19 @@ def binary_choice():
             print("Use only integers numbers")
 
 
-def current_time():
+def display_time(clock_sec=0):
     """
-    Display the current time updated every second.
+    Display the choose time updated every second.
     :return: ∅
     """
+    if clock_sec == 0:
+        clock_set = None
+    else:
+        clock_set = clock_sec
     while True:
-        print("\r", time.strftime("%H:%M:%S", time.localtime()), end="")
+        print("\r", time.strftime("%H:%M:%S", time.localtime(clock_set)), end="")
+        if clock_set is not None:
+            clock_set += 1
         time.sleep(1)
 
 
@@ -79,12 +85,9 @@ def user_time():
     :return: ∅
     """
     clock_in = clock_input()
-    clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
-    clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
-    while True:
-        print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
-        clock_sec += 1
-        time.sleep(1)
+    my_clock_sec = clock_in[0] * 3600 + clock_in[1] * 60 + clock_in[2]
+    my_clock_sec = my_clock_sec - 3600  # Correct time because it begins at 1:00 AM
+    display_time(my_clock_sec)
 
 
 def clock():
@@ -97,7 +100,7 @@ def clock():
     if my_choice == 1:
         user_time()
     elif my_choice == 2:
-        current_time()
+        display_time()
 
 
 if __name__ == "__main__":
