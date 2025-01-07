@@ -73,8 +73,6 @@ def display_time(clock_sec=None):
         time.sleep(1)
 
 
-
-
 def clock():
     """
     Clock main function.
