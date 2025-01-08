@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 06/01/2025 15h37
+Date : 08/01/2025 11h25
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -90,8 +90,6 @@ def clock():
         display_time(my_clock_sec)
     else:
         display_time()
-
-
 
 
 if __name__ == "__main__":
