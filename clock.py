@@ -15,28 +15,46 @@ def clock_input():
     Function used to set the clock.
     :return: A tuple of hours, minutes and seconds user has chose.
     """
-    test = False
-    while not test:
+    test1 = False
+    test2 = False
+    test3 = False
+    while not test1:
         try:
-            clock = (int(input("Set the clock!\n\nFirst, choose hours : ", )), int(input("Next, choose minutes : ", )),
-                     int(input("And at the end, choose seconds : ", )))
-            if 0 <= clock[0] < 24:
-                if 0 <= clock[1] < 60:
-                    if 0 <= clock[2] < 60:
-                        return clock
-                    else:
-                        print("Seconds has to be in a correct range!")
-                else:
-                    print("Minutes has to be in a correct range!")
+            clock_h = int(input("Set the clock!\n\nFirst, choose hours : ", ))
+            if 0 <= clock_h < 24:
+                test1 = True
             else:
                 print("Hour has to be in a correct range!")
         except ValueError:
-            print("What have you done?\nUse only integers numbers!\nGrandma has been eaten by a wolf!!\n")
+            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+
+    while not test2:
+        try:
+            clock_m = int(input("Next, choose minutes : ", ))
+            if 0 <= clock_m < 60:
+                test2 = True
+            else:
+                print("Minutes has to be in a correct range!")
+        except ValueError:
+            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+
+    while not test3:
+        try:
+            clock_s = int(input("And at the end, choose seconds : ", ))
+            if 0 <= clock_s < 60:
+                test3 = True
+            else:
+                print("Seconds has to be in a correct range!")
+        except ValueError:
+            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+
+    return clock_h, clock_m, clock_s
 
 
 def seconds_time(clock):
     """
     Convert a tuple of hours, minutes and seconds only in seconds.
+    :param clock: A tuple of hours, minutes and seconds
     :return: Time in seconds.
     """
     clock_sec = clock[0] * 3600 + clock[1] * 60 + clock[2]
@@ -64,6 +82,8 @@ def binary_choice():
 def display_time(clock_sec=None):
     """
     Display the choose time updated every second.
+    When clock-sec is set at None display curent time.
+    :param clock_sec: Time choose count in seconds, could be omitted.
     :return: ∅
     """
     while True:
@@ -82,7 +102,7 @@ def clock():
     my_choice = binary_choice()
     if my_choice == 1:
         my_alarm_sec = seconds_time(clock_input())
-    
+
     print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
     my_choice = binary_choice()
     if my_choice == 1:
