@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 08/01/2025 17h22
+Date : 08/01/2025 17h50
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -21,13 +21,13 @@ def clock_input():
     test3 = False
     while not test1:
         try:
-            clock_h = int(input("Set the clock!\n\nFirst, choose hours : ", ))
+            clock_h = int(input("\nSet the clock!\n\nFirst, choose hours : ", ))
             if 0 <= clock_h < 24:
                 test1 = True
             else:
-                print("Hour has to be in a correct range!")
+                print("\nHour has to be in a correct range!")
         except ValueError:
-            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+            print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
     while not test2:
         try:
@@ -35,7 +35,7 @@ def clock_input():
             if 0 <= clock_m < 60:
                 test2 = True
             else:
-                print("Minutes has to be in a correct range!")
+                print("\nMinutes has to be in a correct range!")
         except ValueError:
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
@@ -45,7 +45,7 @@ def clock_input():
             if 0 <= clock_s < 60:
                 test3 = True
             else:
-                print("Seconds has to be in a correct range!")
+                print("\nSeconds has to be in a correct range!")
         except ValueError:
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
@@ -75,9 +75,9 @@ def binary_choice():
             if binary == 1 or binary == 2:
                 return binary
             else:
-                print("You can only choose 1 or 2")
+                print("\nYou can only choose 1 or 2")
         except ValueError:
-            print("Use only integers numbers")
+            print("\nUse only integers numbers")
 
 
 def display_time(clock=None):
@@ -100,24 +100,97 @@ def display_time(clock=None):
         time.sleep(1)
 
 
+def cls():
+    """
+    Clear the console on Windows or Linux OS.
+    :return: ∅
+    """
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def display_menu():
+    """
+    Display the menu on the terminal.
+    :return: ∅
+    """
+    print("\nWelcome to Grandma's clock!\n")
+
+    print("In this menu, you can choose between different options:\n")
+
+    print("1: Display current local time")
+    print("2: Set the time you want")
+    print("3: Set an alarm")
+    print("4: Switch between 12 hours and 24 hours display")
+    print("5: Pause your clock")
+    print("6: Exit\n")
+
+
+def choose_option():
+    """
+    Take and execute the function the user wants.
+    :return: ∅
+    """
+    menu_option = input("Choose your option (enter '1' to '6'): ")
+
+    match menu_option:
+        case "1":
+            display_time()
+        case "2":
+            my_clock_sec = clock_input()
+            display_time(my_clock_sec)
+        case "3":
+            print("\nSet the alarm!")
+        case "4":
+            print("\nHour format switched!")
+        case "5":
+            print("\nClock paused")
+        case "6":
+            cls()
+            exit()
+        case _:
+            print("Invalid input!\nDon't do that! The wolf it's coming!")
+            choose_option()
+
+
 def clock():
     """
     Clock main function.
     :return: ∅
     """
-    print("Do you want an alarm ?\nChoose 1 to set your alarm time or 2 to pass the step.")
-    my_choice = binary_choice()
-    if my_choice == 1:
-        my_alarm_sec = seconds_time(clock_input())
-
-    print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
-    my_choice = binary_choice()
-    if my_choice == 1:
-        my_clock_sec = clock_input()
-        display_time(my_clock_sec)
-    else:
-        display_time()
+    try:
+        display_menu()
+        choose_option()
+    except KeyboardInterrupt:
+        cls()
+        clock()
 
 
 if __name__ == "__main__":
     clock()
+
+# binary_choice et seconds_time ne sont plus utilisés (pour le moment)
+
+# Piste de remplacement pour display_time()
+
+# def display_time():
+#     """
+#     Display the choose time updated every second.
+#     :return: ∅
+#     """
+#     while True:
+#         if alarm_time == user_time:
+#             print("\r", clock, "ALARM RINGING!", end="")
+#         else:
+#             print("\r", clock, end="")
+#         time.sleep(1)
+
+
+# def passing_time(clock):
+#     """
+#     Keep track of the passing time
+#     :return: user_time
+#     """
+#     while True:
+#         clock += 1
+#         time.sleep(1)
