@@ -96,46 +96,74 @@ def display_menu():
     print("3: Set an alarm")
     print("4: Switch between 12 hours and 24 hours display")
     print("5: Pause your clock") 
-    print("6: Reset") 
+    print("6: Exit") 
     print("")
 
 
 def choose_option():
-    try: 
+    """
+    Take and execute the function the user wants.
+    :return: ∅
+    """
+    menu_option = input("Choose your option (enter '1' to '6'): ")
 
-        menu_option = input("Choose your option (enter '1' to '6'): ")
-
-        match menu_option:
-            case "1":
-                display_time()
-            case "2":
-                my_clock_sec = seconds_time(clock_input())
-                display_time(my_clock_sec)
-            case "3":
-                print("set the alarm")
-            case "4":
-                print("switch hour format")
-            case "5":
-                print("pause the clock")
-            case "6":
-                cls()
-                clock()
-            case _:
-                print("Invalid input.")
-                choose_option()
-    except KeyboardInterrupt:
-        cls()
-        clock()
+    match menu_option:
+        case "1":
+            display_time()
+        case "2":
+            my_clock_sec = seconds_time(clock_input())
+            display_time(my_clock_sec)
+        case "3":
+            print("set the alarm")
+        case "4":
+            print("switch hour format")
+        case "5":
+            print("pause the clock")
+        case "6":
+            cls()
+            exit()
+        case _:
+            print("Invalid input.")
+            choose_option()
 
 
-def clock():
+def clock(): 
     """
     Clock main function.
     :return: ∅
     """
-    display_menu()
-    choose_option()
+    try:
+        display_menu()
+        choose_option()
+    except KeyboardInterrupt:
+        cls()
+        clock()        
 
 
 if __name__ == "__main__":
     clock()
+
+
+# Piste de remplacement pour display_time()
+
+# def display_time():
+#     """
+#     Display the choose time updated every second.
+#     :return: ∅
+#     """
+#     while True:
+#         if alarm_time == user_time:
+#             print("\r", clock, "ALARM RINGING!", end="")
+#         else:
+#             print("\r", clock, end="")
+#         time.sleep(1)
+
+
+# def passing_time(clock):
+#     """
+#     Keep track of the passing time
+#     :return: user_time
+#     """
+#     while True:
+#         clock += 1
+#         time.sleep(1)
