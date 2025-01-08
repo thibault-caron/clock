@@ -73,6 +73,15 @@ def display_time(clock_sec=None):
         time.sleep(1)
 
 
+def cls():
+    """
+    Clear the console on Windows or Linux os
+    :return: ∅
+    """
+    import os
+    os.system('cls' if os.name=='nt' else 'clear')
+
+
 def display_menu():
     """
     Display the menu on the terminal.
@@ -92,25 +101,31 @@ def display_menu():
 
 
 def choose_option():
-    menu_option = input("Choose your option (enter '1' to '6'): ")
+    try: 
 
-    match menu_option:
-        case "1":
-            display_time()
-        case "2":
-            my_clock_sec = seconds_time(clock_input())
-            display_time(my_clock_sec)
-        case "3":
-            print("set the alarm")
-        case "4":
-            print("switch hour format")
-        case "5":
-            print("pause the clock")
-        case "6":
-            clock()
-        case _:
-            print("Invalid input.")
-            choose_option()
+        menu_option = input("Choose your option (enter '1' to '6'): ")
+
+        match menu_option:
+            case "1":
+                display_time()
+            case "2":
+                my_clock_sec = seconds_time(clock_input())
+                display_time(my_clock_sec)
+            case "3":
+                print("set the alarm")
+            case "4":
+                print("switch hour format")
+            case "5":
+                print("pause the clock")
+            case "6":
+                cls()
+                clock()
+            case _:
+                print("Invalid input.")
+                choose_option()
+    except KeyboardInterrupt:
+        cls()
+        clock()
 
 
 def clock():
