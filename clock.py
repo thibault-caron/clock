@@ -73,25 +73,53 @@ def display_time(clock_sec=None):
         time.sleep(1)
 
 
+def display_menu():
+    """
+    Display the menu on the terminal.
+    :return: ∅
+    """
+    print("")
+    print("Welcome to Grandma's clock!")
+    print("In this menu, you can choose between different options:")
+    print("")
+    print("1: Display current local time")
+    print("2: Set the time you want")
+    print("3: Set an alarm")
+    print("4: Switch between 12 hours and 24 hours display")
+    print("5: Pause your clock") 
+    print("6: Reset") 
+    print("")
+
+
+def choose_option():
+    menu_option = input("Choose your option (enter '1' to '6'): ")
+
+    match menu_option:
+        case "1":
+            display_time()
+        case "2":
+            my_clock_sec = seconds_time(clock_input())
+            display_time(my_clock_sec)
+        case "3":
+            print("set the alarm")
+        case "4":
+            print("switch hour format")
+        case "5":
+            print("pause the clock")
+        case "6":
+            clock()
+        case _:
+            print("Invalid input.")
+            choose_option()
+
+
 def clock():
     """
     Clock main function.
     :return: ∅
     """
-    print("Do you want an alarm ?\nChoose 1 to set your alarm time or 2 to pass the step.")
-    my_choice = binary_choice()
-    if my_choice == 1:
-        my_alarm_sec = seconds_time(clock_input())
-    
-    print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
-    my_choice = binary_choice()
-    if my_choice == 1:
-        my_clock_sec = seconds_time(clock_input())
-        display_time(my_clock_sec)
-    else:
-        display_time()
-
-
+    display_menu()
+    choose_option()
 
 
 if __name__ == "__main__":
