@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 08/01/2025 11h25
+Date : 08/01/2025 17h22
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -8,6 +8,7 @@ Output :
 """
 
 import time
+import datetime
 
 
 def clock_input():
@@ -54,7 +55,7 @@ def clock_input():
 def seconds_time(clock):
     """
     Convert a tuple of hours, minutes and seconds only in seconds.
-    :param clock: A tuple of hours, minutes and seconds
+    :param clock: A tuple of hours, minutes and seconds.
     :return: Time in seconds.
     """
     clock_sec = clock[0] * 3600 + clock[1] * 60 + clock[2]
@@ -79,17 +80,23 @@ def binary_choice():
             print("Use only integers numbers")
 
 
-def display_time(clock_sec=None):
+def display_time(clock=None):
     """
     Display the choose time updated every second.
-    When clock-sec is set at None display curent time.
-    :param clock_sec: Time choose count in seconds, could be omitted.
+    When clock is set at None display curent time.
+    :param clock: A tuple of hours, minutes and seconds.
     :return: ∅
     """
+    if clock is None:
+        clock_time = datetime.datetime.now()
+    else:
+        clock_time = datetime.datetime(1900, 1, 1, clock[0], clock[1], clock[2])
+        clock_sec = datetime.timedelta(seconds=1)
+
     while True:
-        print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
-        if clock_sec is not None:
-            clock_sec += 1
+        print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
+        if clock is not None:
+            clock_time = clock_time + clock_sec
         time.sleep(1)
 
 
@@ -106,7 +113,7 @@ def clock():
     print("Do you want to set the clock time or use current time?\nChoose 1 to set your time or 2 to use current time.")
     my_choice = binary_choice()
     if my_choice == 1:
-        my_clock_sec = seconds_time(clock_input())
+        my_clock_sec = clock_input()
         display_time(my_clock_sec)
     else:
         display_time()
