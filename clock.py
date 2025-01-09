@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 09/01/2025 14h57
+Date : 09/01/2025 16h33
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -91,12 +91,13 @@ def binary_choice():
             print("\nUse only integers numbers")
 
 
-def display_time(alarm, clock):
+def display_time(alarm, clock, hour_format):
     """
     Display the choose time updated every second.
     When clock is set at None display curent time.
     :param alarm: A datetime formated alarm.
     :param clock: A tuple of hours, minutes and seconds.
+    :param hour_format: Hour display format (24h or 12h with AM/PM).
     :return: ∅
     """
     clock_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
@@ -104,12 +105,14 @@ def display_time(alarm, clock):
     increment = datetime.timedelta(seconds=1)
 
     while True:
-        print("\r", clock_time.strftime("%H:%M:%S"), end="")
-
+        if hour_format == 24:
+            print("\r", clock_time.strftime("%H:%M:%S"), end="")
+        else:
+            print("\r", clock_time.strftime("%I:%M:%S %p"), end="")
+        clock_time = clock_time + increment
         if alarm is not None:
             if alarm == clock_time:
                 print("\nWake up quick!!\nWolf is near your house!")
-        clock_time = clock_time + increment
         time.sleep(1)
 
 
@@ -139,7 +142,7 @@ def display_menu():
     print("6: Exit\n")
 
 
-def choose_option(alarm_time):
+def choose_option(alarm_time, clock_format):
     """
     Take and execute the function the user wants.
     :return: ∅
@@ -149,32 +152,34 @@ def choose_option(alarm_time):
     match menu_option:
         case "1":
             computer_time = clock_now()
-            display_time(alarm_time, computer_time)
+            display_time(alarm_time, computer_time, clock_format)
         case "2":
             print("\nSet the clock!")
             user_time = clock_input()
-            display_time(alarm_time, user_time)
+            display_time(alarm_time, user_time, clock_format)
         case "3":
             print("\nSet the alarm!")
             alarm_tuple = clock_input()
             alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
                                            datetime.datetime.now().day, alarm_tuple[0], alarm_tuple[1], alarm_tuple[2])
             display_menu()
-            choose_option(alarm_time)
+            choose_option(alarm_time, clock_format)
         case "4":
             print("\nHour format switched!")
+            clock_format = 12 if clock_format == 24 else 24
+            print(f"Now the clock is set in {clock_format} hours")
             display_menu()
-            choose_option(alarm_time)
+            choose_option(alarm_time, clock_format)
         case "5":
             print("\nClock paused")
             display_menu()
-            choose_option(alarm_time)
+            choose_option(alarm_time, clock_format)
         case "6":
             cls()
             exit()
         case _:
             print("Invalid input!\nDon't do that! The wolf it's coming!")
-            choose_option(alarm_time)
+            choose_option(alarm_time, clock_format)
 
 
 def clock():
@@ -183,9 +188,10 @@ def clock():
     :return: ∅
     """
     try:
+        clock_format_default = 24
         alarm_default = None
         display_menu()
-        choose_option(alarm_default)
+        choose_option(alarm_default, clock_format_default)
     except KeyboardInterrupt:
         cls()
         clock()
@@ -193,29 +199,3 @@ def clock():
 
 if __name__ == "__main__":
     clock()
-
-# binary_choice et seconds_time ne sont plus utilisés (pour le moment)
-
-# Piste de remplacement pour display_time()
-
-# def display_time():
-#     """
-#     Display the choose time updated every second.
-#     :return: ∅
-#     """
-#     while True:
-#         if alarm_time == user_time:
-#             print("\r", clock, "ALARM RINGING!", end="")
-#         else:
-#             print("\r", clock, end="")
-#         time.sleep(1)
-
-
-# def passing_time(clock):
-#     """
-#     Keep track of the passing time
-#     :return: user_time
-#     """
-#     while True:
-#         clock += 1
-#         time.sleep(1)
