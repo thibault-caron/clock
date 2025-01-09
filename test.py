@@ -72,12 +72,14 @@ def display_time(clock_sec=0):
         clock_sec = None
 
     while True:
-        if my_alarm_sec
         print("\r", time.strftime("%H:%M:%S", time.localtime(clock_sec)), end="")
         if clock_sec is not None:
             clock_sec += 1
         time.sleep(1)
 
+def check_alarm ()
+    tps = time.strftime("%H:%M:%S", time.localtime(clock_sec)) 
+    
 
 
 
@@ -99,9 +101,7 @@ def clock():
     else:
         display_time()
 
-    while True:
-        if my_alarm_sec == time.localtime() 
-        print("dring")
+
 
 
 
