@@ -1,6 +1,5 @@
 
 import time
-import datetime
 
 def clock_input(clock=()):
     """
@@ -43,20 +42,23 @@ def clock_input(clock=()):
     clock = (hours, minutes, seconds)
     return clock
 
+# def display_time(choice):
 
-# def clock_now(clock=()):
-#     """
-#     Function used to return computer time.
-#     :return: A tuple of hours, minutes and seconds.
-#     """
-#     hours = datetime.datetime.now().hour
-#     minutes = datetime.datetime.now().minute
-#     seconds = datetime.datetime.now().second
-#     clock =(hours, minutes, seconds)
-#     return clock
+#     test = False
+#     while not test:
+#         try:
+#             choice = int(input("Finally, do you want 12 hours or 24 hours display ? (enter 12 or 24)",))
+#             if choice == 12 or choice == 24:
+#                 test = True
+#             else:
+#                 print("Your input must be 12 or 24.")
+#         except ValueError:
+#             print("Your input must be 12 or 24.")
 
 
-def clock_heart(H, M, S):
+
+
+def clock_heart(H, M, S, dring_clock):
     # loop for add a second and return a time
     while True:
 
@@ -71,86 +73,64 @@ def clock_heart(H, M, S):
         clock = (H, M, S)
         alarm(dring_clock[0], dring_clock[1], dring_clock[2], clock)
         print_time(clock)
+
         S += 1
         time.sleep(1)
+
+
 
 def print_time(tp=()):
     print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02}", end="")
 
+
 def alarm(h, m, s, clock):
     if h == clock[0] and m == clock[1] and s == clock[2]:
-        print("DRING")
+        cls()
+        print(f"\rDRING DRING DRING\n")
 
-# def display_menu():
-#     """
-#     Display the menu on the terminal.
-#     :return: ∅
-#     """
-#     print("\nWelcome to Grandma's clock!\n")
-
-#     print("In this menu, you can choose between different options:\n")
-
-#     print("1: Display current local time")
-#     print("2: Set the time you want")
-#     print("3: Set an alarm")
-#     print("4: Switch between 12 hours and 24 hours display")
-#     print("5: Pause your clock")
-#     print("6: Exit\n")
-
-# def choose_option(alarm_time):
-#     """
-#     Take and execute the function the user wants.
-#     :return: ∅
-#     """
-#     menu_option = input("Choose your option (enter '1' to '6'): ")
-
-#     match menu_option:
-#         case "1":
-#             computer_time = clock_now()
-#             display_time(alarm_time, computer_time)
-#         case "2":
-#             print("\nSet the clock!")
-#             user_time = clock_input()
-#             display_time(alarm_time, user_time)
-#         case "3":
-#             print("\nSet the alarm!")
-#             alarm_tuple = clock_input()
-#             alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
-#                                            datetime.datetime.now().day, alarm_tuple[0], alarm_tuple[1], alarm_tuple[2])
-#             display_menu()
-#             choose_option(alarm_time)
-#         case "4":
-#             print("\nHour format switched!")
-#             display_menu()
-#             choose_option(alarm_time)
-#         case "5":
-#             print("\nClock paused")
-#             display_menu()
-#             choose_option(alarm_time)
-#         case "6":
-#             cls()
-#             exit()
-#         case _:
-#             print("Invalid input!\nDon't do that! The wolf it's coming!")
-#             choose_option(alarm_time)
+def cls():
+    """
+    Clear the console on Windows or Linux OS.
+    :return: ∅
+    """
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
-# def clock():
-#     """
-#     Clock main function.
-#     :return: ∅
-#     """
-#     try:
-#         alarm_default = None
-#         display_menu()
-#         choose_option(alarm_default)
-#     except KeyboardInterrupt:
-#         cls()
-#         clock()
+def clock():
+    """
+    Clock main function.
+    :return: ∅
+    """
+
+    # clean terminal screen
+    cls()
+
+    # print a welcome screen to set the clock
+    print("Grandma's clock !\n")
+    print("First, let's set the clock :")
+    CLOCK = clock_input()
+
+    # clean terminal screen
+    cls()
+
+    # print a screen to set the alarm
+    print("Then, let's set an alarm :")
+    dring_clock = clock_input()
+
+    # clean terminal screen
+    cls()
+
+    # print a screen to choose the display time
+    #XXXXXXXXXXXXX
+
+    print(f"The alarm is setted for {dring_clock[0]:02}:{dring_clock[1]:02}:{dring_clock[2]:02}\n")
+    clock = clock_heart(CLOCK[0], CLOCK[1], CLOCK[2],dring_clock)
+    return clock, dring_clock
 
 
 
-dring_clock = clock_input()
-CLOCK = clock_input()
-clock = clock_heart(CLOCK[0], CLOCK[1], CLOCK[2])
+if __name__ == "__main__":
+    clock()
+
 
