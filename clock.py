@@ -98,7 +98,7 @@ def display_time(clock=None):
         clock_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day, clock[0], clock[1], clock[2])
         increment = datetime.timedelta(seconds=1)
 
-    while True:
+    while clock_pause == False:
         if clock is None:
             clock_time = datetime.datetime.now()
         if clock is not None:
