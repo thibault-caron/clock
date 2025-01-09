@@ -7,7 +7,7 @@ Input : clock :
 Output :
 """
 
-from time import sleep
+import time
 import datetime
 
 
