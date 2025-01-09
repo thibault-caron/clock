@@ -1,19 +1,27 @@
-from datetime import timedelta, datetime
-import datetime
+
 import time
 
-# function to add a second to a time
-def clock_heart(H, M, S):
-    clock = datetime.datetime(1, 1, 1, H, M, S)
+def clock_heart():
+    H = 23
+    M = 59
+    S = 57
+    # loop for add a second and return a time
     while True:
-        clock = clock + datetime.timedelta(seconds=1)
-        print(clock.time(), end="\r")
-        #faire une variable a partir de stamp.time!!! 
-        # et enlever le print!!!!
-        # et prévoir une variablle start qui prend soi lheure locale, soi l'heure réglée 
+        if S == 60 :
+            S = 0
+            M += 1
+            if M == 60 :
+                M = 0
+                H += 1
+                if H == 24 :
+                    H = 0
+        S += 1
+        clock = (H, M, S)
+        # print(clock)
         time.sleep(1)
-        
-clock_heart(16, 3, 00)
 
+
+
+clock_heart()
 
 
