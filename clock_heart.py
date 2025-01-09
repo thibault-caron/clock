@@ -58,23 +58,26 @@ def clock_input(clock=()):
 
 
 
-def clock_heart(H, M, S, dring_clock):
+def clock_heart(start_clock, dring_clock):
     # loop for add a second and return a time
+    h = start_clock[0]
+    m = start_clock[1]
+    s = start_clock[2]
+    
     while True:
-
-        if S == 60 :
-            S = 0
-            M += 1
-            if M == 60 :
-                M = 0
-                H += 1
-                if H == 24 :
-                    H = 0
-        clock = (H, M, S)
-        alarm(dring_clock[0], dring_clock[1], dring_clock[2], clock)
+        if s == 60 :
+            s = 0
+            m += 1
+            if m == 60 :
+                m = 0
+                h += 1
+                if h == 24 :
+                    h = 0
+        clock = (h, m, s)
+        alarm(dring_clock, clock)
         print_time(clock)
 
-        S += 1
+        s += 1
         time.sleep(1)
 
 
@@ -82,11 +85,14 @@ def clock_heart(H, M, S, dring_clock):
 def print_time(tp=()):
     print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02}", end="")
 
+#pour une base 12, a 12:00 on change AM pou PM et on repart à 00:00 (après 12:00 on passe à 01:00)
 
-def alarm(h, m, s, clock):
-    if h == clock[0] and m == clock[1] and s == clock[2]:
+
+def alarm(dring_clock, clock):
+    if dring_clock[0] == clock[0] and dring_clock[1] == clock[1] and dring_clock[2] == clock[2]:
         cls()
         print(f"\rDRING DRING DRING\n")
+        
 
 def cls():
     """
@@ -95,6 +101,8 @@ def cls():
     """
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
+
+# def exit()1
 
 
 def clock():
@@ -109,7 +117,7 @@ def clock():
     # print a welcome screen to set the clock
     print("Grandma's clock !\n")
     print("First, let's set the clock :")
-    CLOCK = clock_input()
+    start_clock = clock_input()
 
     # clean terminal screen
     cls()
@@ -125,8 +133,9 @@ def clock():
     #XXXXXXXXXXXXX
 
     print(f"The alarm is setted for {dring_clock[0]:02}:{dring_clock[1]:02}:{dring_clock[2]:02}\n")
-    clock = clock_heart(CLOCK[0], CLOCK[1], CLOCK[2],dring_clock)
-    return clock, dring_clock
+    # clock = clock_heart(Clock[0], Clock[1], Clock[2],dring_clock)
+    clock_heart(start_clock, dring_clock)
+    # return clock, dring_clock
 
 
 
