@@ -199,10 +199,8 @@ if __name__ == "__main__":
 
     # alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day, 00, 00, 00)
 
-    alarm_time = (00, 00, 00)
-    user_time = (00, 00, 00)
-    time_format = "24h"
-    clock_pause = False
+    # time_format = "24h"
+    # clock_pause = False
 
     clock()
 
