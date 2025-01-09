@@ -87,13 +87,13 @@ def display_time(clock=None):
     :param clock: A tuple of hours, minutes and seconds.
     :return: ∅
     """
-    if clock is None:
-        clock_time = datetime.datetime.now()
-    else:
+    if clock is not None:
         clock_time = datetime.datetime(1900, 1, 1, clock[0], clock[1], clock[2])
         clock_sec = datetime.timedelta(seconds=1)
 
     while True:
+        if clock is None:
+            clock_time = datetime.datetime.now()
         print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
         if clock is not None:
             clock_time = clock_time + clock_sec
