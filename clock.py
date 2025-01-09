@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 08/01/2025 17h50
+Date : 09/01/2025 14h57
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -21,7 +21,7 @@ def clock_input():
     test3 = False
     while not test1:
         try:
-            clock_h = int(input("\nSet the clock!\n\nFirst, choose hours : ", ))
+            clock_h = int(input("\nFirst, choose hours : ", ))
             if 0 <= clock_h < 24:
                 test1 = True
             else:
@@ -49,6 +49,17 @@ def clock_input():
         except ValueError:
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
+    return clock_h, clock_m, clock_s
+
+
+def clock_now():
+    """
+    Function used to return computer time.
+    :return: A tuple of hours, minutes and seconds.
+    """
+    clock_h = datetime.datetime.now().hour
+    clock_m = datetime.datetime.now().minute
+    clock_s = datetime.datetime.now().second
     return clock_h, clock_m, clock_s
 
 
@@ -80,23 +91,25 @@ def binary_choice():
             print("\nUse only integers numbers")
 
 
-def display_time(clock=None):
+def display_time(alarm, clock):
     """
     Display the choose time updated every second.
     When clock is set at None display curent time.
+    :param alarm: A datetime formated alarm.
     :param clock: A tuple of hours, minutes and seconds.
     :return: ∅
     """
-    if clock is not None:
-        clock_time = datetime.datetime(1900, 1, 1, clock[0], clock[1], clock[2])
-        clock_sec = datetime.timedelta(seconds=1)
+    clock_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
+                                   datetime.datetime.now().day, clock[0], clock[1], clock[2])
+    increment = datetime.timedelta(seconds=1)
 
     while True:
-        if clock is None:
-            clock_time = datetime.datetime.now()
         print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
-        if clock is not None:
-            clock_time = clock_time + clock_sec
+        # datetime.datetime.strftime("%H:%M:%S")
+        if alarm is not None:
+            if alarm == clock_time:
+                print("\nWake up quick!!\nWolf is near your house!")
+        clock_time = clock_time + increment
         time.sleep(1)
 
 
@@ -126,7 +139,7 @@ def display_menu():
     print("6: Exit\n")
 
 
-def choose_option():
+def choose_option(alarm_time):
     """
     Take and execute the function the user wants.
     :return: ∅
@@ -135,22 +148,33 @@ def choose_option():
 
     match menu_option:
         case "1":
-            display_time()
+            computer_time = clock_now()
+            display_time(alarm_time, computer_time)
         case "2":
-            my_clock_sec = clock_input()
-            display_time(my_clock_sec)
+            print("\nSet the clock!")
+            user_time = clock_input()
+            display_time(alarm_time, user_time)
         case "3":
             print("\nSet the alarm!")
+            alarm_tuple = clock_input()
+            alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
+                                           datetime.datetime.now().day, alarm_tuple[0], alarm_tuple[1], alarm_tuple[2])
+            display_menu()
+            choose_option(alarm_time)
         case "4":
             print("\nHour format switched!")
+            display_menu()
+            choose_option(alarm_time)
         case "5":
             print("\nClock paused")
+            display_menu()
+            choose_option(alarm_time)
         case "6":
             cls()
             exit()
         case _:
             print("Invalid input!\nDon't do that! The wolf it's coming!")
-            choose_option()
+            choose_option(alarm_time)
 
 
 def clock():
@@ -159,8 +183,9 @@ def clock():
     :return: ∅
     """
     try:
+        alarm_default = None
         display_menu()
-        choose_option()
+        choose_option(alarm_default)
     except KeyboardInterrupt:
         cls()
         clock()
