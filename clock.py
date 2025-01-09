@@ -104,8 +104,8 @@ def display_time(alarm, clock):
     increment = datetime.timedelta(seconds=1)
 
     while True:
-        print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
-        # datetime.datetime.strftime("%H:%M:%S")
+        print("\r", clock_time.strftime("%H:%M:%S"), end="")
+
         if alarm is not None:
             if alarm == clock_time:
                 print("\nWake up quick!!\nWolf is near your house!")
