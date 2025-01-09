@@ -7,7 +7,7 @@ Input : clock :
 Output :
 """
 
-import time
+from time import sleep
 import datetime
 
 
@@ -52,6 +52,13 @@ def clock_input():
     return clock_h, clock_m, clock_s
 
 
+def clock_now():
+    clock_h = datetime.datetime.now().hour
+    clock_m = datetime.datetime.now().minute
+    clock_s = datetime.datetime.now().second
+    return clock_h, clock_m, clock_s
+
+
 def seconds_time(clock):
     """
     Convert a tuple of hours, minutes and seconds only in seconds.
@@ -88,16 +95,23 @@ def display_time(clock=None):
     :return: ∅
     """
     if clock is not None:
-        clock_time = datetime.datetime(1900, 1, 1, clock[0], clock[1], clock[2])
-        clock_sec = datetime.timedelta(seconds=1)
+        clock_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day, clock[0], clock[1], clock[2])
+        increment = datetime.timedelta(seconds=1)
 
     while True:
         if clock is None:
             clock_time = datetime.datetime.now()
-        print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
         if clock is not None:
-            clock_time = clock_time + clock_sec
-        time.sleep(1)
+            clock_time = clock_time + increment
+        
+        # print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
+
+        if clock_time == alarm_time:
+            print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", "ALARM!!!, ALARM!!!", end="")
+        else:
+            print("\r", f"{clock_time.hour}:{clock_time.minute}:{clock_time.second}", end="")
+
+        sleep(1)
 
 
 def cls():
@@ -115,6 +129,8 @@ def display_menu():
     :return: ∅
     """
     print("\nWelcome to Grandma's clock!\n")
+
+    print(f"alarm_time: {alarm_time}\nuser_time: {user_time}\ntime_format: {time_format}\nclock_pause: {clock_pause}\n")
 
     print("In this menu, you can choose between different options:\n")
 
@@ -135,21 +151,34 @@ def choose_option():
 
     match menu_option:
         case "1":
-            display_time()
+            user_time = clock_now()
+            display_time(user_time)
+            return user_time
         case "2":
-            my_clock_sec = clock_input()
-            display_time(my_clock_sec)
+            user_time = clock_input()
+            display_time(user_time)
+            return user_time
         case "3":
             print("\nSet the alarm!")
+            alarm_time = clock_input()
+            display_menu()
+            choose_option()
+            return alarm_time
         case "4":
             print("\nHour format switched!")
+            display_menu()
+            choose_option()
+            # return time_format
         case "5":
             print("\nClock paused")
+            display_menu()
+            choose_option()
+            # return clock_pause
         case "6":
             cls()
             exit()
         case _:
-            print("Invalid input!\nDon't do that! The wolf it's coming!")
+            print("Invalid input!\nDon't do that! The wolf is coming!")
             choose_option()
 
 
@@ -167,6 +196,14 @@ def clock():
 
 
 if __name__ == "__main__":
+
+    # alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day, 00, 00, 00)
+
+    alarm_time = (00, 00, 00)
+    user_time = (00, 00, 00)
+    time_format = "24h"
+    clock_pause = False
+
     clock()
 
 # binary_choice et seconds_time ne sont plus utilisés (pour le moment)
@@ -179,11 +216,11 @@ if __name__ == "__main__":
 #     :return: ∅
 #     """
 #     while True:
-#         if alarm_time == user_time:
+#         if alarm_time == clock:
 #             print("\r", clock, "ALARM RINGING!", end="")
 #         else:
 #             print("\r", clock, end="")
-#         time.sleep(1)
+#         sleep(1)
 
 
 # def passing_time(clock):
@@ -193,4 +230,5 @@ if __name__ == "__main__":
 #     """
 #     while True:
 #         clock += 1
-#         time.sleep(1)
+#         sleep(1)
+#         return clock
