@@ -3,8 +3,8 @@ import time
 
 def clock_input(clock=()):
     """
-    Function used to set the clock.
-    :return: A tuple of hours, minutes and seconds user has chose.
+    Function used to input a time.
+    :return: A tuple clock.
     """
     test1 = False
     test2 = False
@@ -43,7 +43,11 @@ def clock_input(clock=()):
     return clock
 
 
-def clock_heart(start_clock, dring_clock, binary):
+def clock_heart(start_clock, dring_clock, choice_print_time, choice_set_alarm):
+    """
+    Function that makes an infinite loop to create time whith incrementation.
+    :return: print according to user's choices.
+    """
     # loop for add a second and return a time
     h = start_clock[0]
     m = start_clock[1]
@@ -59,10 +63,13 @@ def clock_heart(start_clock, dring_clock, binary):
                 if h == 24 :
                     h = 0
         clock = (h, m, s)
-        if binary == 1 :
+
+        if choice_set_alarm == 1 :
             alarm(dring_clock, clock)
+
+        if choice_print_time == 1:
             print_time_24(clock)
-        else:
+        elif choice_print_time == 2:
             print_time_12(clock)
 
         s += 1
@@ -71,9 +78,17 @@ def clock_heart(start_clock, dring_clock, binary):
 
 
 def print_time_24(tp=()):
+    """
+    Function used to input a time.
+    :return: A tuple clock.
+    """
     print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02}", end="")
 
 def print_time_12(tp=()):
+    """
+    Function used to input a time.
+    :return: A tuple clock.
+    """
     part = "AM"
     if tp[0] == 0:
         print(f"\r12:{tp[1]:02}:{tp[2]:02} {part}", end="")
@@ -89,11 +104,15 @@ def print_time_12(tp=()):
 
 
 def alarm(dring_clock, clock):
+    """
+    Function used to input a time.
+    :return: A tuple clock.
+    """
     if dring_clock[0] == clock[0] and dring_clock[1] == clock[1] and dring_clock[2] == clock[2]:
         cls()
         print(f"\rDRING DRING DRING\n")
 
-def binary_choice(binary):
+def binary_choice():
     """
     Translate a choice in integers 1 or 2.
     :return: Integer 1 or 2.
@@ -101,7 +120,7 @@ def binary_choice(binary):
     test = False
     while not test:
         try:
-            binary = int(input("Your choice: ", ))
+            binary = int(input("\nYour choice: ", ))
             if binary == 1 or binary == 2:
                 return binary
             else:
@@ -118,8 +137,10 @@ def cls():
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
 # def exit()1
 # def stop-restart
+# Trouver un moyen de faire disparaitre le message de l'alarme après n secondes
 
 
 def clock():
@@ -127,38 +148,57 @@ def clock():
     Clock main function.
     :return: ∅
     """
-    binary = None
-    
+    # variables initialization
+    choice_print_time = None
+    choice_set_alarm = None
+    dring_clock = None
+
 
     # clean terminal screen
     cls()
 
-    # print a welcome screen to set the clock
+    # print a welcome screen and give a first choice : the display's time
     print("Grandma's clock !\n")
-    print("First, let's set the clock :")
-    start_clock = clock_input()
+    print("First, let's choose the display's time:")
+    print("\n1: 24 display (00:00:00)")
+    print("2: 12 display (00:00:00 AM/PM)")
+    # choice_print_time is update with the user choice
+    choice_print_time = binary_choice()
 
     # clean terminal screen
     cls()
 
     # print a screen to choose if you want to set the alarm
-    print("Do you want to set an alarm ? (1 for Yes or 2 for No)")
-    binary = binary_choice(binary)
+    print("Do you want to set an alarm ?")
+    print("\n1: YES")
+    print("2: NO")
+    # choice_set_alarm is update with the user choice
+    choice_set_alarm = binary_choice()
 
-    if binary == 1:
-        cls ()
-        print("Fine ! let's set an alarm :")
+    # if the user choice is YES, a new screen to set the alarm
+    if choice_set_alarm == 1:
+        cls()
+        print("Fine ! Let's set an alarm :")
         dring_clock = clock_input()
-        cls()
+    
+    # clean terminal screen
+    cls()
+
+    #  a screen to set the clock
+    print("Then, let's set the clock !")
+    start_clock = clock_input()
+
+    # clean terminal screen
+    cls()
+
+    # Final screen with the alarm time reminder if the user choose it 
+    # and the time display in the chosen format.
+    if choice_set_alarm == 1:
         print(f"The alarm is setted for {dring_clock[0]:02}:{dring_clock[1]:02}:{dring_clock[2]:02}\n")
-        # clock = clock_heart(Clock[0], Clock[1], Clock[2],dring_clock)
-        clock_heart(start_clock, dring_clock, binary)
-        # return clock, dring_clock
-        
-    elif binary == 2 :
-        dring_clock = None
-        clock_heart(start_clock, dring_clock, binary)
-        cls()
+
+    # on lance l'horloge
+    clock_heart(start_clock, dring_clock, choice_print_time, choice_set_alarm)
+
 
 if __name__ == "__main__":
     clock()
