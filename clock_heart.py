@@ -42,23 +42,8 @@ def clock_input(clock=()):
     clock = (hours, minutes, seconds)
     return clock
 
-# def display_time(choice):
 
-#     test = False
-#     while not test:
-#         try:
-#             choice = int(input("Finally, do you want 12 hours or 24 hours display ? (enter 12 or 24)",))
-#             if choice == 12 or choice == 24:
-#                 test = True
-#             else:
-#                 print("Your input must be 12 or 24.")
-#         except ValueError:
-#             print("Your input must be 12 or 24.")
-
-
-
-
-def clock_heart(start_clock, dring_clock):
+def clock_heart(start_clock, dring_clock, binary):
     # loop for add a second and return a time
     h = start_clock[0]
     m = start_clock[1]
@@ -74,24 +59,55 @@ def clock_heart(start_clock, dring_clock):
                 if h == 24 :
                     h = 0
         clock = (h, m, s)
-        alarm(dring_clock, clock)
-        print_time(clock)
+        if binary == 1 :
+            alarm(dring_clock, clock)
+            print_time_24(clock)
+        else:
+            print_time_12(clock)
 
         s += 1
         time.sleep(1)
 
 
 
-def print_time(tp=()):
+def print_time_24(tp=()):
     print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02}", end="")
 
-#pour une base 12, a 12:00 on change AM pou PM et on repart à 00:00 (après 12:00 on passe à 01:00)
+def print_time_12(tp=()):
+    part = "AM"
+    if tp[0] == 0:
+        print(f"\r12:{tp[1]:02}:{tp[2]:02} {part}", end="")
+    elif (1, 0, 0) <= tp < (12, 0, 0):
+        print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02} {part}", end="")
+    elif tp[0] == 12:
+        part = "PM"
+        print(f"\r{tp[0]:02}:{tp[1]:02}:{tp[2]:02} {part}", end="")
+    elif 13 <= tp[0] < 24:
+        part = "PM"
+        print(f"\r{(int(tp[0])-12):02}:{tp[1]:02}:{tp[2]:02} {part}", end="")
+
 
 
 def alarm(dring_clock, clock):
     if dring_clock[0] == clock[0] and dring_clock[1] == clock[1] and dring_clock[2] == clock[2]:
         cls()
         print(f"\rDRING DRING DRING\n")
+
+def binary_choice(binary):
+    """
+    Translate a choice in integers 1 or 2.
+    :return: Integer 1 or 2.
+    """
+    test = False
+    while not test:
+        try:
+            binary = int(input("Your choice: ", ))
+            if binary == 1 or binary == 2:
+                return binary
+            else:
+                print("\nYou can only choose 1 or 2")
+        except ValueError:
+            print("\nUse only integers numbers")
         
 
 def cls():
@@ -103,6 +119,7 @@ def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # def exit()1
+# def stop-restart
 
 
 def clock():
@@ -110,6 +127,8 @@ def clock():
     Clock main function.
     :return: ∅
     """
+    binary = None
+    
 
     # clean terminal screen
     cls()
@@ -122,22 +141,24 @@ def clock():
     # clean terminal screen
     cls()
 
-    # print a screen to set the alarm
-    print("Then, let's set an alarm :")
-    dring_clock = clock_input()
+    # print a screen to choose if you want to set the alarm
+    print("Do you want to set an alarm ? (1 for Yes or 2 for No)")
+    binary = binary_choice(binary)
 
-    # clean terminal screen
-    cls()
-
-    # print a screen to choose the display time
-    #XXXXXXXXXXXXX
-
-    print(f"The alarm is setted for {dring_clock[0]:02}:{dring_clock[1]:02}:{dring_clock[2]:02}\n")
-    # clock = clock_heart(Clock[0], Clock[1], Clock[2],dring_clock)
-    clock_heart(start_clock, dring_clock)
-    # return clock, dring_clock
-
-
+    if binary == 1:
+        cls ()
+        print("Fine ! let's set an alarm :")
+        dring_clock = clock_input()
+        cls()
+        print(f"The alarm is setted for {dring_clock[0]:02}:{dring_clock[1]:02}:{dring_clock[2]:02}\n")
+        # clock = clock_heart(Clock[0], Clock[1], Clock[2],dring_clock)
+        clock_heart(start_clock, dring_clock, binary)
+        # return clock, dring_clock
+        
+    elif binary == 2 :
+        dring_clock = None
+        clock_heart(start_clock, dring_clock, binary)
+        cls()
 
 if __name__ == "__main__":
     clock()
