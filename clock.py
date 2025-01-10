@@ -109,10 +109,12 @@ def display_time(alarm, clock, hour_format):
             print("\r", clock_time.strftime("%H:%M:%S"), end="")
         else:
             print("\r", clock_time.strftime("%I:%M:%S %p"), end="")
-        clock_time = clock_time + increment
+
         if alarm is not None:
             if alarm == clock_time:
                 print("\nWake up quick!!\nWolf is near your house!")
+
+        clock_time = clock_time + increment
         time.sleep(1)
 
 
@@ -160,7 +162,6 @@ def choose_option(alarm_time, clock_format):
             user_time = clock_input()
             display_time(alarm_time, user_time, clock_format)
         case "3":
-            cls()
             print("\nSet the alarm!")
             alarm_tuple = clock_input()
             alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month,
@@ -168,14 +169,12 @@ def choose_option(alarm_time, clock_format):
             display_menu()
             choose_option(alarm_time, clock_format)
         case "4":
-            cls()
             print("\nHour format switched!")
             clock_format = 12 if clock_format == 24 else 24
             print(f"Now the clock is set in {clock_format} hours")
             display_menu()
             choose_option(alarm_time, clock_format)
         case "5":
-            cls()
             print("\nClock paused")
             display_menu()
             choose_option(alarm_time, clock_format)
