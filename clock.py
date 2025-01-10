@@ -17,34 +17,32 @@ def clock_input():
     Function used to set the clock.
     :return: A tuple of hours, minutes and seconds user has chose.
     """
-    test1 = False
-    test2 = False
-    test3 = False
-    while not test1:
+    test = False
+    while not test:
         try:
             clock_h = int(input("\nFirst, choose hours (24h format only) : ", ))
             if 0 <= clock_h < 24:
-                test1 = True
+                test = True
             else:
                 print("\nHour has to be in a correct range!")
         except ValueError:
             print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    while not test2:
+    while test:
         try:
             clock_m = int(input("Next, choose minutes : ", ))
             if 0 <= clock_m < 60:
-                test2 = True
+                test = False
             else:
                 print("\nMinutes has to be in a correct range!")
         except ValueError:
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    while not test3:
+    while not test:
         try:
             clock_s = int(input("And at the end, choose seconds : ", ))
             if 0 <= clock_s < 60:
-                test3 = True
+                test = True
             else:
                 print("\nSeconds has to be in a correct range!")
         except ValueError:
@@ -112,7 +110,7 @@ def display_time(alarm, clock, hour_format):
 
         if alarm is not None:
             if alarm == clock_time:
-                print("\nWake up quick!!\nWolf is near your house!")
+                print("\nWake up quick!!\nThe Wolf is near your house!")
 
         clock_time = clock_time + increment
         sleep(1)
@@ -199,12 +197,4 @@ def clock():
 
 
 if __name__ == "__main__":
-
-    # alarm_time = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day, 00, 00, 00)
-
-    user_time = (00, 00, 00)
-    alarm_time = (00, 00, 00)
-    time_format = "24h"
-    clock_pause = False
-
     clock()
