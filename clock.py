@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 10/01/2025 11h38
+Date : 10/01/2025 16h27
 Aim of the program :
     Display the clock.
 Input : clock :
@@ -17,34 +17,33 @@ def clock_input():
     Function used to set the clock.
     :return: A tuple of hours, minutes and seconds user has chose.
     """
-    test1 = False
-    test2 = False
-    test3 = False
-    while not test1:
+    test = False
+
+    while not test:
         try:
             clock_h = int(input("\nFirst, choose hours (24h format only) : ", ))
             if 0 <= clock_h < 24:
-                test1 = True
+                test = True
             else:
                 print("\nHour has to be in a correct range!")
         except ValueError:
             print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    while not test2:
+    while test:
         try:
             clock_m = int(input("Next, choose minutes : ", ))
             if 0 <= clock_m < 60:
-                test2 = True
+                test = False
             else:
                 print("\nMinutes has to be in a correct range!")
         except ValueError:
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    while not test3:
+    while not test:
         try:
             clock_s = int(input("And at the end, choose seconds : ", ))
             if 0 <= clock_s < 60:
-                test3 = True
+                test = True
             else:
                 print("\nSeconds has to be in a correct range!")
         except ValueError:
@@ -62,34 +61,6 @@ def clock_now():
     clock_m = datetime.now().minute
     clock_s = datetime.now().second
     return clock_h, clock_m, clock_s
-
-
-def seconds_time(clock):
-    """
-    Convert a tuple of hours, minutes and seconds only in seconds.
-    :param clock: A tuple of hours, minutes and seconds.
-    :return: Time in seconds.
-    """
-    clock_sec = clock[0] * 3600 + clock[1] * 60 + clock[2]
-    clock_sec = clock_sec - 3600  # Correct time because it begins at 1:00 AM
-    return clock_sec
-
-
-def binary_choice():
-    """
-    Translate a choice in integers 1 or 2.
-    :return: Integer 1 or 2.
-    """
-    test = False
-    while not test:
-        try:
-            binary = int(input("Your choice: ", ))
-            if binary == 1 or binary == 2:
-                return binary
-            else:
-                print("\nYou can only choose 1 or 2")
-        except ValueError:
-            print("\nUse only integers numbers")
 
 
 def display_time(alarm, clock, hour_format):
