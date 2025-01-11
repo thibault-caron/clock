@@ -1,10 +1,10 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 10/01/2025 16h27
+Date : 11/01/2025 01h39
 Aim of the program :
     Display the clock.
-Input : clock :
-Output :
+Inputs : The user enter the menu's option he has chosen and if necessary he set clock time and alarm time.
+Output : Display a menu were you can choose option to run the clock.
 """
 
 from time import sleep
@@ -26,7 +26,7 @@ def clock_input():
                 test = True
             else:
                 print("\nHour has to be in a correct range!")
-        except ValueError:
+        except ValueError:  # Create and exception when the user doesn't enter an integer.
             print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
     while test:
@@ -36,7 +36,7 @@ def clock_input():
                 test = False
             else:
                 print("\nMinutes has to be in a correct range!")
-        except ValueError:
+        except ValueError:  # Create and exception when the user doesn't enter an integer.
             print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
     while not test:
@@ -46,10 +46,10 @@ def clock_input():
                 test = True
             else:
                 print("\nSeconds has to be in a correct range!")
-        except ValueError:
-            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+        except ValueError:  # Create and exception when the user doesn't enter an integer.
+            print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    return clock_h, clock_m, clock_s
+    return clock_h, clock_m, clock_s  # Return a tuple of hours, minutes and seconds.
 
 
 def clock_now():
@@ -60,7 +60,8 @@ def clock_now():
     clock_h = datetime.now().hour
     clock_m = datetime.now().minute
     clock_s = datetime.now().second
-    return clock_h, clock_m, clock_s
+
+    return clock_h, clock_m, clock_s  # Return a tuple of hours, minutes and seconds.
 
 
 def display_time(alarm, clock, hour_format):
@@ -73,20 +74,23 @@ def display_time(alarm, clock, hour_format):
     :return: ∅
     """
     clock_time = datetime(datetime.now().year, datetime.now().month, datetime.now().day, clock[0], clock[1], clock[2])
-    increment = timedelta(seconds=1)
+    # Transform the tuple of hours, minutes and seconds in a datetime object.
+
+    increment = timedelta(seconds=1)  # Creates a one-second step which will be used to increment the time.
+    print()  # Skip a line before displaying the clock to a better visual comfort.
 
     while True:
         if hour_format == 24:
-            print(f"\r{clock_time.strftime("%H:%M:%S")}", end="")
+            print(f"\r{clock_time.strftime("%H:%M:%S")}", end="")  # Print time in 24h format (16:25:10).
         else:
-            print(f"\r{clock_time.strftime("%I:%M:%S %p")}", end="")
+            print(f"\r{clock_time.strftime("%I:%M:%S %p")}", end="")  # Print time in 12h format (04:25:10 PM).
 
         if alarm is not None:
-            if alarm == clock_time:
+            if alarm == clock_time:  # Checks if it is alarm time.
                 print("\nWake up quick!!\nWolf is near your house!")
 
         clock_time = clock_time + increment
-        sleep(1)
+        sleep(1)  # Wait a second the program to simulate the passage of time.
 
 
 def cls():
@@ -94,7 +98,7 @@ def cls():
     Clear the console on Windows or Linux OS.
     :return: ∅
     """
-    system('cls' if name == 'nt' else 'clear')
+    system('cls' if name == 'nt' else 'clear')  # Check computer and choose the correct clear command.
 
 
 def choose_option(alarm_time, clock_format, view_menu=True):
@@ -116,38 +120,38 @@ def choose_option(alarm_time, clock_format, view_menu=True):
         print("5: Pause your clock")
         print("6: Exit\n")
 
-    if view_menu is True:
-        display_menu()
+    if view_menu is True:  # Check if the clock menu has to be displayed.
+        display_menu()  # Display the clock menu.
     menu_option = input("Choose your option (enter '1' to '6'): ")
 
     match menu_option:
-        case "1":
+        case "1":  # The user choose to display computer time.
             computer_time = clock_now()
-            display_time(alarm_time, computer_time, clock_format)
-        case "2":
+            display_time(alarm_time, computer_time, clock_format)  # Display the clock.
+        case "2":  # The user choose to set the clock time to display.
             print("\nSet the clock!")
             user_time = clock_input()
-            display_time(alarm_time, user_time, clock_format)
-        case "3":
+            display_time(alarm_time, user_time, clock_format)  # Display the clock.
+        case "3":  # The user choose to set an alarm.
             print("\nSet the alarm!")
-            alarm_tuple = clock_input()
+            alarm_tuple = clock_input()  # A tuple of hours, minutes and seconds.
             alarm_time = datetime(datetime.now().year, datetime.now().month,datetime.now().day,
-                                  alarm_tuple[0], alarm_tuple[1], alarm_tuple[2])
-            choose_option(alarm_time, clock_format)
-        case "4":
+                                  alarm_tuple[0], alarm_tuple[1], alarm_tuple[2])  # Transform tuple in datetime object.
+            choose_option(alarm_time, clock_format)  # Come back to choice of menu options and display the menu again.
+        case "4":  # The user choose to change hours format.
             print("\nHour format switched!")
             clock_format = 12 if clock_format == 24 else 24
-            print(f"Now the clock is set in {clock_format} hours")
-            choose_option(alarm_time, clock_format,False)
-        case "5":
-            print("\nClock paused")
-            choose_option(alarm_time, clock_format,False)
-        case "6":
+            print(f"Now the clock is set in {clock_format} hours\n")
+            choose_option(alarm_time, clock_format,False)  # Come back to choice of menu options.
+        case "5":  # The user choose to pause the clock.
+            print("\nClock paused\n")
+            choose_option(alarm_time, clock_format,False)  # Come back to choice of menu options.
+        case "6":  # The user choose to exit the program.
             cls()
             exit()
-        case _:
-            print("Invalid input!\nDon't do that! The wolf is coming!")
-            choose_option(alarm_time, clock_format, False)
+        case _:  # The user enter an invalid input.
+            print("Invalid input!\nDon't do that! The wolf is coming!\n")
+            choose_option(alarm_time, clock_format, False)  # Come back to choice of menu options.
 
 
 def clock():
@@ -156,18 +160,18 @@ def clock():
     :return: ∅
     """
     try:
-        clock_format_default = 24
-        alarm_default = None
+        clock_format_default = 24  # Clock format is set in 24h at the start of the program.
+        alarm_default = None  # Alarm is turn off at the start of the program.
 
         print("\nWelcome to Grandma's clock!\n")
         print("In this menu, you can choose between different options:")
 
-        choose_option(alarm_default, clock_format_default)
+        choose_option(alarm_default, clock_format_default)  # Run the menu.
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # Rerun the program from the beginning when KeyboardInterrupt is used.
         cls()
         clock()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # The program will be run only if executed directly, not if it called from another program.
     clock()
