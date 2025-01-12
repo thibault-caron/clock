@@ -16,38 +16,32 @@ from keyboard import is_pressed
 def clock_input():
     """
     Function used to set the clock.
+    Use the function time_input.
     :return: A tuple of hours, minutes and seconds user has chose.
     """
-    test = False
-    while not test:
-        try:
-            clock_h = int(input("\nFirst, choose the hours (24h format): ", ))
-            if 0 <= clock_h < 24:
-                test = True
-            else:
-                print("\nHour has to be in a correct range! (00-23)")
-        except ValueError: # Create an exception when the user doesn't enter an integer.
-            print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
 
-    while test:
-        try:
-            clock_m = int(input("Next, choose the minutes (00-59): ", ))
-            if 0 <= clock_m < 60:
-                test = False
-            else:
-                print("\nThe minutes have to be in a correct range! (00-59)")
-        except ValueError: 
-            print("What have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+    def time_input(value, limit):
+        """
+        Function used to input one of the clock parameters (hours, minutes or seconds).
+        :param value: The time parameter to input.
+        :param limit: Maximum value of the parameter (23 for hour, 59 for minutes and seconds).
+        :return: Time parameter input.
+        """
+        test = False
+        while not test:
+            try:
+                clock = int(input(f"\nChoose the {value} : ", ))
+                if 0 <= clock <= limit:
+                    test = True
+                else:
+                    print(f"\nThe {value} have to be in a correct range! (00-{limit})")
+            except ValueError:  # Create an exception when the user doesn't enter an integer.
+                print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+        return clock
 
-    while not test:
-        try:
-            clock_s = int(input("And lastly, choose the seconds (00-59): ", ))
-            if 0 <= clock_s < 60:
-                test = True
-            else:
-                print("\nThe seconds have to be in the correct range! (00-59)")
-        except ValueError:
-            print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
+    clock_h = time_input("hours",23)
+    clock_m = time_input("minutes", 59)
+    clock_s = time_input("seconds", 59)
 
     return clock_h, clock_m, clock_s  # Return a tuple of hours, minutes and seconds.
 
