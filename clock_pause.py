@@ -80,7 +80,6 @@ def display_time(alarm, clock, hour_format, paused=False):
 
     print("\nClock will be run\nUse the 'space' key to stop the clock and resume it.\n"
           "Use the 'KeyboardInterrupt' key to come back to the clock menu (all options will be reset).\n")
-    # Skip a line before displaying the clock for better visual comfort.
 
     while True:
         if is_pressed('space'):  # Check if the space key is pressed.
