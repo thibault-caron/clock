@@ -1,6 +1,6 @@
 """
 Authors : Lorenzo OTTAVIANI, Anna LEITE et Thibault CARON
-Date : 12/01/2025 18h09
+Date : 13/01/2025 8h48
 Aim of the program :
     Display the clock.
 Inputs : The user enter the menu's option he has chosen and if necessary he set clock time and alarm time.
@@ -30,7 +30,7 @@ def clock_input():
         test = False
         while not test:
             try:
-                clock = int(input(f"\nChoose the {value} : ", ))
+                clock = int(input(f"Choose the {value} : "))
                 if 0 <= clock <= limit:
                     test = True
                 else:
@@ -39,7 +39,7 @@ def clock_input():
                 print("\nWhat have you done?\nUse only integers numbers!\n\nGrandma has been eaten by a wolf!!\n")
         return clock
 
-    clock_h = time_input("hours",23)
+    clock_h = time_input("hours", 23)
     clock_m = time_input("minutes", 59)
     clock_s = time_input("seconds", 59)
 
