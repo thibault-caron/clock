@@ -1,6 +1,5 @@
 # **Grandma's Clock**
 
-
 <img src="./clock_owl.jpg" alt="An owl clock!">
 
 ## **Introduction**
